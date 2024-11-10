@@ -4,17 +4,14 @@ import Nat "mo:base/Nat";
 import Bool "mo:base/Bool";
 
 actor QuejasSistema {
-    // Definir la estructura para almacenar la información de una queja
     type Queja = {
         id: Nat;
         descripcion: Text;
         resuelta: Bool;
     };
 
-    // Crear el mapa de quejas usando `Map.new`
     let quejas = Map.new<Nat, Queja>();
 
-    // Inicialización de quejas predeterminadas
     func inicializarQuejas() {
         let queja1 : Queja = {
             id = 1;
@@ -32,39 +29,51 @@ actor QuejasSistema {
 
     inicializarQuejas();
 
-    // Crear una nueva queja
     public func crearQueja(descripcion: Text) : async Text {
-        let id = (Map.size(quejas) + 1);  // Generar un ID único basado en el tamaño del mapa
-        let nuevaQueja : Queja = {  // Especifica que es de tipo Queja
-            id = id;
+        // Obtener el siguiente ID disponible
+        let idsExistentes = Map.keys(quejas);
+        var nuevoId = 1;
+        
+        // Verificar que el nuevoId no esté ya en uso
+        var encontrado = false;
+        while (not encontrado) {
+            encontrado := true;
+            for (id in idsExistentes) {
+                if (id == nuevoId) {
+                    encontrado := false;
+                    nuevoId += 1;
+                };
+            };
+        };
+
+        let nuevaQueja : Queja = {
+            id = nuevoId;
             descripcion = descripcion;
             resuelta = false;
         };
-        Map.set(quejas, nhash, id, nuevaQueja);  // Insertar la queja en el mapa
+        Map.set(quejas, nhash, nuevoId, nuevaQueja);
         return "Queja creada con éxito";
     };
 
-  public func mostrarQuejas() : async Text {
-      var listaQuejas: Text = "Quejas registradas:\n"; // Inicia un string con un encabezado
-      for ((_, queja) in Map.entries(quejas)) {
-          listaQuejas := listaQuejas # "ID: " # Nat.toText(queja.id) # "\n" # 
-              "Descripción: " # queja.descripcion # "\n" # 
-              "Resuelta: " # Bool.toText(queja.resuelta) # "\n\n";
-      };
-      return listaQuejas;  // Devuelve todas las quejas formateadas como una cadena de texto
-  };
+    public func mostrarQuejas() : async Text {
+        var listaQuejas: Text = "Quejas registradas:\n";
+        for ((_, queja) in Map.entries(quejas)) {
+            listaQuejas := listaQuejas # "ID: " # Nat.toText(queja.id) # "\n" # 
+                "Descripción: " # queja.descripcion # "\n" # 
+                "Resuelta: " # Bool.toText(queja.resuelta) # "\n\n";
+        };
+        return listaQuejas;
+    };
 
-
-    // Actualizar el estado de una queja (resuelta o no)
     public func actualizarQueja(id: Nat, resuelta: Bool) : async Text {
         switch (Map.get(quejas, nhash, id)) {
             case (?queja) {
-                let nuevaQueja : Queja = {  // Especifica que es de tipo Queja
+                let nuevaQueja : Queja = { 
                     id = queja.id;
                     descripcion = queja.descripcion;
                     resuelta = resuelta;
                 };
-                Map.set(quejas, nhash, id, nuevaQueja);  // Actualizar la queja en el mapa
+                Map.set(quejas, nhash, id, nuevaQueja);
                 return "Queja actualizada con éxito";
             };
             case (_) {
@@ -73,16 +82,34 @@ actor QuejasSistema {
         };
     };
 
-    // Eliminar una queja
+    public func quejasPorEstado(resueltas: Bool) : async Text {
+        var listaQuejas: Text = "Quejas " # (if resueltas "resueltas:\n" else "pendientes:\n");
+        for ((_, queja) in Map.entries(quejas)) {
+            if (queja.resuelta == resueltas) {
+                listaQuejas := listaQuejas # "ID: " # Nat.toText(queja.id) # "\n" # 
+                    "Descripción: " # queja.descripcion # "\n\n";
+            };
+        };
+        return listaQuejas;
+    };
+
     public func eliminarQueja(id: Nat) : async Text {
-        switch (Map.get(quejas, nhash, id)) {
-            case (?_) {
-                Map.delete(quejas, nhash, id);  // Eliminar la queja del mapa
-                return "Queja eliminada con éxito";
+        // Obtener la queja de forma síncrona
+        let resultado = Map.get(quejas, nhash, id);
+        
+        switch (resultado) {
+            case (?queja) {
+                if (queja.resuelta) {
+                    // Eliminar la queja si está resuelta
+                    Map.delete(quejas, nhash, id);
+                    return "Queja eliminada con éxito";
+                } else {
+                    return "No se puede eliminar una queja pendiente";
+                };
             };
             case (_) {
                 return "Queja no encontrada";
             };
         };
     };
-};
+}
