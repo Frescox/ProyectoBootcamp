@@ -15,12 +15,12 @@ actor QuejasSistema {
     func inicializarQuejas() {
         let queja1 : Queja = {
             id = 1;
-            descripcion = "La comida estaba fría al llegar a la mesa";
+            descripcion = "Deben ser mas ordenados el ingresar";
             resuelta = false;
         };
         let queja2 : Queja = {
             id = 2;
-            descripcion = "El servicio fue muy lento";
+            descripcion = "Fulanito causó problemas en el comedor";
             resuelta = false;
         };
         Map.set(quejas, nhash, queja1.id, queja1);
@@ -30,11 +30,9 @@ actor QuejasSistema {
     inicializarQuejas();
 
     public func crearQueja(descripcion: Text) : async Text {
-        // Obtener el siguiente ID disponible
         let idsExistentes = Map.keys(quejas);
         var nuevoId = 1;
         
-        // Verificar que el nuevoId no esté ya en uso
         var encontrado = false;
         while (not encontrado) {
             encontrado := true;
@@ -84,7 +82,7 @@ actor QuejasSistema {
 
     public func quejasPorEstado(resueltas: Bool) : async Text {
         var listaQuejas: Text = "Quejas " # (if resueltas "resueltas:\n" else "pendientes:\n");
-        for ((_, queja) in Map.entries(quejas)) {
+        for ((_, queja) inMap.entries(queja s)) {
             if (queja.resuelta == resueltas) {
                 listaQuejas := listaQuejas # "ID: " # Nat.toText(queja.id) # "\n" # 
                     "Descripción: " # queja.descripcion # "\n\n";
@@ -94,13 +92,11 @@ actor QuejasSistema {
     };
 
     public func eliminarQueja(id: Nat) : async Text {
-        // Obtener la queja de forma síncrona
         let resultado = Map.get(quejas, nhash, id);
         
         switch (resultado) {
             case (?queja) {
                 if (queja.resuelta) {
-                    // Eliminar la queja si está resuelta
                     Map.delete(quejas, nhash, id);
                     return "Queja eliminada con éxito";
                 } else {

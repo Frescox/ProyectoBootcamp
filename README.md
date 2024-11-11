@@ -1,57 +1,39 @@
-%% Sistema de Quejas en Motoko
+# Sistema de Quejas en Motoko
 
-% Este proyecto implementa un sistema de gestión de quejas en **Motoko**, 
-% el lenguaje de programación para el **Internet Computer**. El sistema 
-% permite registrar, mostrar, actualizar y eliminar quejas de manera sencilla. 
-% Está diseñado para mostrar cómo interactuar con los **canisters** 
-% usando Motoko.
+Este proyecto implementa un sistema de gestión de quejas en **Motoko**, el lenguaje de programación para el **Internet Computer**. El sistema permite registrar, mostrar, actualizar y eliminar quejas de manera sencilla. Está diseñado para mostrar cómo interactuar con los **canisters** usando Motoko.
 
-% Requisitos
-% Para poder ejecutar este proyecto, necesitarás tener los siguientes requisitos:
+## Requisitos
 
-% 1. **Instalar Dfinity SDK (dfx)**: Necesitarás el entorno de desarrollo de Dfinity 
-%    para interactuar con el Internet Computer localmente. Puedes instalarlo 
-%    siguiendo los pasos de la [documentación oficial](https://sdk.dfinity.org/docs/developers-guide/install-upgrade-remove.html).
+Para poder ejecutar este proyecto, necesitarás tener los siguientes requisitos:
 
-% 2. **Clonar el repositorio**: Necesitarás clonar el repositorio con el código fuente del proyecto.
+1. **Instalar Dfinity SDK (dfx)**: Necesitarás el entorno de desarrollo de Dfinity para interactuar con el Internet Computer localmente. Puedes instalarlo siguiendo los pasos de la [documentación oficial](https://sdk.dfinity.org/docs/developers-guide/install-upgrade-remove.html).
 
-% 3. **Ejecutar el proyecto en local y desplegar los canisters**: 
-%    El proyecto se ejecutará en tu máquina local utilizando el entorno de Dfinity.
+2. **Clonar el repositorio**: Necesitarás clonar el repositorio con el código fuente del proyecto.
 
-%% Pasos para ejecutar el código
+3. **Ejecutar el proyecto en local y desplegar los canisters**: El proyecto se ejecutará en tu máquina local utilizando el entorno de Dfinity.
 
-% 1. Instalar Dfinity SDK (dfx)
+## Pasos para ejecutar el código
 
-% Primero, debes instalar Dfinity SDK (dfx). Si no lo tienes instalado, 
-% puedes hacerlo ejecutando el siguiente comando:
+### 1. Instalar Dfinity SDK (dfx)
 
-% - **En macOS/Linux**:
+Primero, debes instalar Dfinity SDK (dfx). Si no lo tienes instalado, puedes hacerlo ejecutando el siguiente comando:
 
-% sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
+- **En macOS/Linux**:
 
-% 2. Clonar el repositorio
+sh -ci "$(curl -fsSL https://internetcomputer.org/install.sh)"
 
-% Clona el repositorio del proyecto a tu máquina local:
+### 2. Clonar el repositorio
 
-% git clone https://github.com/tu_usuario/sistema_quejas_motoko.git
-% cd sistema_quejas_motoko
+git clone https://github.com/Frescox/ProyectoBootcamp.git
 
-% 3. Iniciar el entorno de Dfinity
+cd proyectoBootmcap
 
-% Para iniciar el entorno de Dfinity y lanzar el nodo local, ejecuta el siguiente comando:
+### 3. Iniciar el entorno de Dfinity
+dfx start --background --clean
 
-% dfx start --background
+### 4. Desplegar los canisters
+dfx deploy
 
-% Este comando arranca un nodo local del Internet Computer en segundo plano 
-% para poder desplegar y ejecutar los canisters en tu máquina.
-
-% 4. Desplegar los canisters
-
-% Despliega el canister al entorno local de Dfinity:
-
-% dfx deploy
-
-% Este comando ejecuta el despliegue del canister, lo que permite interactuar con 
-% el sistema de quejas desde tu entorno local.
+### 5. Ingresa al link del backend del proyectoBootamp generado
 
 
