@@ -1,6 +1,6 @@
 # Sistema de Quejas en Motoko
 
-Este proyecto implementa un sistema de gestión de quejas en **Motoko**, el lenguaje de programación para el **Internet Computer**. El sistema permite registrar, mostrar, actualizar y eliminar quejas de manera sencilla. Está diseñado para mostrar cómo interactuar con los **canisters** usando Motoko.
+Este proyecto implementa un sistema de gestión de quejas en **Motoko**, el lenguaje de programación para el **Internet Computer**. El sistema permite registrar, mostrar, actualizar y eliminar quejas de manera sencilla.
 
 ## Requisitos
 

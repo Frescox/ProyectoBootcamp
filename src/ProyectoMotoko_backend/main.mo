@@ -1,3 +1,5 @@
+
+
 import Map "mo:map/Map";
 import { nhash } "mo:map/Map";
 import Nat "mo:base/Nat";
@@ -82,7 +84,7 @@ actor QuejasSistema {
 
     public func quejasPorEstado(resueltas: Bool) : async Text {
         var listaQuejas: Text = "Quejas " # (if resueltas "resueltas:\n" else "pendientes:\n");
-        for ((_, queja) inMap.entries(queja s)) {
+        for ((_, queja) in Map.entries(quejas)) {
             if (queja.resuelta == resueltas) {
                 listaQuejas := listaQuejas # "ID: " # Nat.toText(queja.id) # "\n" # 
                     "Descripción: " # queja.descripcion # "\n\n";
